@@ -9,13 +9,13 @@ list_train = ['Acne', 'Rosacea', 'Eczemaa']  # The category we want to train the
 # Import Libraries | pip install requirements.txt
 from PIL import Image as PILImageHandler
 from tkinter import *; from tkinter import ttk
-import ctypes, subprocess
+import random
 import os, cv2, numpy as np, pandas as pd
 import tensorflow as tf
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import LabelEncoder
 from tensorflow.keras.applications import VGG19
-from tensorflow.keras.models import Sequential, load_model 
+from tensorflow.keras.models import Sequential, load_model
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.applications.imagenet_utils import preprocess_input
 
@@ -135,13 +135,26 @@ plt.plot(model.history.history['val_accuracy'], label="validation_accuracy")
 plt.legend()
 plt.show()
 
+userInput = str(input("Which Skin disease to compare with our model?\n Acne, Rosacea or Eczemaa?: "))
+img_number = str(input("Will you enter the number of the image or should it be random?\n Filename: "))
+
+base_path = "face_data/DATA/train/"+userInput+"/"
+
+if img_number.lower() == "random":
+    files = os.listdir(base_path)
+    file = [random.choice(files)]
+    final = base_path + f"{file[0]}"; print(final)
+    print(f"The random file chosen is: {file}\n The final path is: {final}")
+    
+else:
+    final = base_path + img_number + ".jpg"
+    print(f"The file chosen is: {img_number}\n The final path is: {final}")
+
+img_path = final
 # model.save('saved_model/skin_model')
 # model = load_model('saved_model/skin_model')
-img = load_img("face_data/DATA/train/Rosacea/rosacea-70.jpg")
+img = load_img(img_path)
 np.argmax(model.predict(img))  # Make a prediction using the trained model.
-
-# Classify a new image
-img_path = "face_data/DATA/train/Rosacea/rosacea-70.jpg"
 
 img = np.expand_dims(cv2.resize(cv2.imread(img_path), (100, 100)), axis=0)
 img_features = VGG.predict(preprocess_input(img)).reshape(1, 4608)
@@ -166,8 +179,8 @@ def openImage():
 root = Tk()
 frm = ttk.Frame(root, padding=20)
 frm.grid()
-ttk.Label(frm, text=f"The predicted class for {img_path} is {list_train[0]}").grid(column=0, row=0)
-ttk.Button(frm, text="See image", command= openImage).grid(column=1, row=0)
+ttk.Label(frm, text=f"The predicted class for {img_path} is {list_train[predicted_label]}").grid(column=0, row=0)
+ttk.Button(frm, text="See image", command=openImage).grid(column=1, row=0)
 root.mainloop()
 
 print(f"The predicted class for {img_path} is {list_train[predicted_label]}")
