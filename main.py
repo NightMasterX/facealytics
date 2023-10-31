@@ -7,7 +7,9 @@ test_data = "./face_data/DATA/testing/"
 list_train = ['Acne', 'Rosacea', 'Eczemaa']  # The category we want to train the Model with.
 
 # Import Libraries | pip install requirements.txt
-from PIL import Image
+from PIL import Image as PILImageHandler
+from tkinter import *; from tkinter import ttk
+import ctypes, subprocess
 import os, cv2, numpy as np, pandas as pd
 import tensorflow as tf
 import matplotlib.pyplot as plt
@@ -156,4 +158,16 @@ encoded_y_test = label_encoder.transform(y_test)
 predicted_class = list_train[predicted_label]
 
 # Print the predicted class
-print(f"The predicted class for {img_path} is {predicted_label}")
+
+def openImage():
+    im = PILImageHandler.open(f"{img_path}")
+    im.show()
+
+root = Tk()
+frm = ttk.Frame(root, padding=20)
+frm.grid()
+ttk.Label(frm, text=f"The predicted class for {img_path} is {list_train[0]}").grid(column=0, row=0)
+ttk.Button(frm, text="See image", command= openImage).grid(column=1, row=0)
+root.mainloop()
+
+print(f"The predicted class for {img_path} is {list_train[predicted_label]}")
