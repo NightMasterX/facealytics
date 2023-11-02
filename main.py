@@ -135,7 +135,7 @@ plt.plot(model.history.history['val_accuracy'], label="validation_accuracy")
 plt.legend()
 plt.show()
 
-userInput = str(input("Which Skin disease to compare with our model?\n Acne, Rosacea or Eczemaa?: "))
+userInput = str(input("Which Skin disease to compare with our model?\n Acne, Rosacea or Eczema?: "))
 img_number = str(input("Will you enter the number of the image or should it be random?\n Filename: "))
 
 base_path = "face_data/DATA/train/"+userInput+"/"
