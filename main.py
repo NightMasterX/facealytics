@@ -7,16 +7,15 @@ test_data = "./face_data/DATA/testing/"
 list_train = ['Acne', 'Rosacea', 'Eczemaa']  # The category we want to train the Model with.
 
 # Import Libraries | pip install requirements.txt
-from PIL import Image as PILImageHandler
-from tkinter import *; from tkinter import ttk
-import random
-import os, cv2, numpy as np, pandas as pd
 import tensorflow as tf
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt, random
+from PIL import Image as PILImageHandler
+from tensorflow.keras.layers import Dense
+import os, cv2, numpy as np, pandas as pd
+from tkinter import *; from tkinter import ttk
 from sklearn.preprocessing import LabelEncoder
 from tensorflow.keras.applications import VGG19
 from tensorflow.keras.models import Sequential, load_model
-from tensorflow.keras.layers import Dense
 from tensorflow.keras.applications.imagenet_utils import preprocess_input
 
 VGG = VGG19(include_top=False, weights='imagenet')  # Load pre-trained VGG19 model trained on ImageNet database
